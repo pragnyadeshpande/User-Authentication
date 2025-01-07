@@ -5,6 +5,7 @@ const helmet =require('helmet');
 const cors = require('cors');
 const cookie = require('cookie-parser');
 const mongoose=require('mongoose');
+const authRouter=require('./routers/authRouter')
 
 const app=express()
 
@@ -19,10 +20,12 @@ mongoose.connect(process.env.MONGO_URI).then(()=>{
 }).catch((err)=>{
     console.log(err);
 })
+app.use('/api/auth',authRouter)
 
 app.get('/',(req,res)=>{
     res.json({'message':'Server is up and running'});
 })
+
 
 app.listen(process.env.PORT,()=>{
     console.log("Listening...")
